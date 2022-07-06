@@ -1,0 +1,9 @@
+body{
+    margin: 10px;
+}
+img{
+    max-height: 500px;
+}
+input{
+    width: 400px;
+}

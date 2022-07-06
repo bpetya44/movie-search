@@ -16,7 +16,7 @@ MongoClient.connect(dbConnectionStr)
     .then(client => {
         console.log('Connected to db ' + dbName);
         db = client.db(dbName)
-        // collection = db.collection('movies')
+        collection = db.collection('movies')
     });
 
     app.use(express.urlencoded({ extended: true}));
@@ -28,9 +28,9 @@ MongoClient.connect(dbConnectionStr)
         try{
             let result = await collection.aggregate([
                 {
-                    "$Search" : {
+                    "$search" : {
                         "autocomplete" : {
-                            "query" : `${request.query.query}`,
+                            "query" : `${req.query.query}`,
                             "path" : "title",
                             "fuzzy" : {
                                 "maxEdits" : 2,
@@ -43,6 +43,7 @@ MongoClient.connect(dbConnectionStr)
             res.send(result);
         } catch (err) {
             res.status(500).send({message: err.message});
+            console.log(err);
         }
     });
     
@@ -51,13 +52,14 @@ MongoClient.connect(dbConnectionStr)
         try{
             let id = req.params.id;
             let result = await collection.findOne({
-                "_id": ObjectId(id),
+                "_id": ObjectId(req.params.id)
             });
 
             res.send(result);
 
         } catch(err) {
             res.status(500).send({message: err.message});
+            console.log(err);
         }
     })
 
