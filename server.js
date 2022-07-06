@@ -23,7 +23,7 @@ MongoClient.connect(dbConnectionStr)
     app.use(express.json());
     app.use(cors());
 
-
+//'/search' is linked in main.js
     app.get('/search', async (req, res) => {
         try{
             let result = await collection.aggregate([
