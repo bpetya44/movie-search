@@ -50,7 +50,7 @@ MongoClient.connect(dbConnectionStr)
     // get the data that was clicked on from the result of the 1st get request
     app.get('/get/:id', async (req, res) => {
         try{
-            let id = req.params.id;
+            // let id = req.params.id;
             let result = await collection.findOne({
                 "_id": ObjectId(req.params.id)
             });
